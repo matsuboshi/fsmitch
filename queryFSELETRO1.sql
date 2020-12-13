@@ -1,18 +1,18 @@
--- DROP TABLE fseletro.produtos;
--- DROP TABLE fseletro.pedidos;
--- DROP TABLE fseletro.comentarios;
--- DROP SCHEMA fseletro;
--- CREATE SCHEMA fseletro;
-DROP DATABASE IF EXISTS fseletro;
+-- DROP TABLE fseletro1.produtos;
+-- DROP TABLE fseletro1.pedidos;
+-- DROP TABLE fseletro1.comentarios;
+-- DROP SCHEMA fseletro1;
+-- CREATE SCHEMA fseletro1;
+DROP DATABASE IF EXISTS fseletro1;
 
 
-CREATE DATABASE IF NOT EXISTS fseletro;
+CREATE DATABASE IF NOT EXISTS fseletro1;
 
 
-USE fseletro;
+USE fseletro1;
 
 
-CREATE TABLE fseletro.produtos (
+CREATE TABLE fseletro1.produtos (
   id INT AUTO_INCREMENT NOT NULL,
   data_inclusao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   categoria VARCHAR(100) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE fseletro.produtos (
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE fseletro.pedidos (
+CREATE TABLE fseletro1.pedidos (
   id INT AUTO_INCREMENT NOT NULL,
   data_pedido TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   cliente_nome VARCHAR(500) NOT NULL,
@@ -40,12 +40,12 @@ CREATE TABLE fseletro.pedidos (
 
 
 ALTER TABLE
-  fseletro.pedidos
+  fseletro1.pedidos
 ADD
-  CONSTRAINT produto_existe FOREIGN KEY(id_produto) REFERENCES fseletro.produtos(id) ON DELETE CASCADE ON UPDATE CASCADE;
+  CONSTRAINT produto_existe FOREIGN KEY(id_produto) REFERENCES fseletro1.produtos(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
-CREATE TABLE fseletro.comentarios (
+CREATE TABLE fseletro1.comentarios (
   id INT AUTO_INCREMENT NOT NULL,
   data datetime NOT NULL DEFAULT NOW(),
   nome VARCHAR(200) NOT NULL,
@@ -55,19 +55,19 @@ CREATE TABLE fseletro.comentarios (
 
 
 INSERT INTO
-  fseletro.comentarios(nome, msg)
+  fseletro1.comentarios(nome, msg)
 VALUES
   ('Mitch Takushi', 'What a wonderful store');
 
 
 INSERT INTO
-  fseletro.comentarios(nome, msg)
+  fseletro1.comentarios(nome, msg)
 VALUES
   ('Natasha', 'Na zdorovie! ');
 
 
 INSERT INTO
-  fseletro.produtos (
+  fseletro1.produtos (
     categoria,
     imagem,
     descricao,
