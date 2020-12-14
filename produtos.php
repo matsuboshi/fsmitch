@@ -1,6 +1,6 @@
 <?php
 $servername = "localhost";
-$username = "phpmyadmin";
+$username = "mitch";
 $password = "pass1234";
 $database = "fseletro1";
 
@@ -70,7 +70,7 @@ if (!$conn) {
 
 
         <?php
-        $sql = "SELECT * FROM produtos";
+        $sql = "SELECT * FROM categorized_products";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {

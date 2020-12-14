@@ -12,10 +12,19 @@ CREATE DATABASE IF NOT EXISTS fseletro1;
 USE fseletro1;
 
 
+-- CREATE USER 'mitch' @'localhost' IDENTIFIED BY 'pass1234';
+-- GRANT ALL PRIVILEGES ON *.* TO 'mitch' @'localhost';
+-- FLUSH PRIVILEGES;
+CREATE TABLE `categoria` (
+  `id` int NOT NULL PRIMARY KEY,
+  `categoria` varchar(100) NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
+
 CREATE TABLE fseletro1.produtos (
   id INT AUTO_INCREMENT NOT NULL,
   data_inclusao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  categoria VARCHAR(100) NOT NULL,
+  `id_categoria` int NOT NULL,
   descricao VARCHAR(500) NOT NULL,
   estoque INT NOT NULL,
   preco DECIMAL(8, 2),
@@ -23,6 +32,12 @@ CREATE TABLE fseletro1.produtos (
   imagem VARCHAR(100),
   PRIMARY KEY (id)
 ) ENGINE = InnoDB;
+
+
+ALTER TABLE
+  `fseletro1`.`produtos`
+ADD
+  CONSTRAINT cat_ex_prod FOREIGN KEY(`id_categoria`) REFERENCES `fseletro1`.`categoria`(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 CREATE TABLE fseletro1.pedidos (
@@ -55,20 +70,45 @@ CREATE TABLE fseletro1.comentarios (
 
 
 INSERT INTO
-  fseletro1.comentarios(nome, msg)
+  `categoria` (`id`, `categoria`)
 VALUES
-  ('Mitch Takushi', 'What a wonderful store');
+  (1, 'refrigerator'),
+  (2, 'laundryMachine'),
+  (3, 'dishwasher'),
+  (4, 'microwave');
 
 
 INSERT INTO
   fseletro1.comentarios(nome, msg)
 VALUES
-  ('Natasha', 'Na zdorovie! ');
+  ('Junior', 'Eu tenho um plano!'),
+  ('Natasha', 'Putin loves hackers!'),
+  ('Dimitri', 'I am no one, I am everyone!'),
+  (
+    'Mitch',
+    'Invest your money instead of spending it.'
+  ),
+  ('Boça', 'O segredo estah na datilografia, cara!'),
+  ('Hugo', 'Prefiro R do que JS!'),
+  ('Raquel', 'Vou comprar tudo dessa loja!!!'),
+  (
+    'Daniel',
+    'Meu, o PHP morreu! Galera só usa Java!'
+  ),
+  (
+    'Bartolomeu',
+    'Sou cientista de dados e só uso HTML.'
+  ),
+  (
+    'Nostradamus',
+    'Usa Laravel, cara! Perde tempo nao!'
+  ),
+  ('Mr Clean', 'How clean is your code?');
 
 
 INSERT INTO
   fseletro1.produtos (
-    categoria,
+    id_categoria,
     imagem,
     descricao,
     preco,
@@ -77,7 +117,7 @@ INSERT INTO
   )
 VALUES
   (
-    "microwave",
+    4,
     "img/product1.png",
     "Microondas 25L Espelhado Philco 220v",
     1589.00,
@@ -85,7 +125,7 @@ VALUES
     35
   ),
   (
-    "microwave",
+    4,
     "img/product2.png",
     "Forno de Microondas Eletrolux 20L Branco",
     2039.00,
@@ -93,7 +133,7 @@ VALUES
     41
   ),
   (
-    "refrigerator",
+    1,
     "img/product3.png",
     "Geladeira Frost Free Brastemp Side Inverse 540 litros",
     11380.00,
@@ -101,7 +141,7 @@ VALUES
     32
   ),
   (
-    "refrigerator",
+    1,
     "img/product4.png",
     "Geladeira Frost Free Brastemp Branca 375 litros",
     6389.00,
@@ -109,7 +149,7 @@ VALUES
     8
   ),
   (
-    "dishwasher",
+    3,
     "img/product5.png",
     "Lava Louça Compacta 8 Serviços Branca 127V Brastemp",
     2389.00,
@@ -117,7 +157,7 @@ VALUES
     17
   ),
   (
-    "dishwasher",
+    3,
     "img/product6.png",
     "Lava-Louças Electrolux Inox com 10 Serviços, 06 Programas de Lavagem e Painel Blue Touch",
     4390.00,
@@ -125,7 +165,7 @@ VALUES
     45
   ),
   (
-    "laundryMachine",
+    2,
     "img/product7.png",
     "Lavadora de Roupas Philco Inverter 12KG",
     3309.00,
@@ -133,7 +173,7 @@ VALUES
     9
   ),
   (
-    "laundryMachine",
+    2,
     "img/product8.png",
     "Lavadora de Roupas Brastemp 11 kg com Turbo Performance Branca",
     4018.00,
@@ -141,7 +181,7 @@ VALUES
     24
   ),
   (
-    "laundryMachine",
+    2,
     "img/product9.png",
     "Samsung WW75J54E0IW 7.5kg Front Load Washing Machine",
     3353.00,
@@ -149,7 +189,7 @@ VALUES
     10
   ),
   (
-    "laundryMachine",
+    2,
     "img/product10.png",
     "AEG Washing Machine L7FE8432S",
     3210.00,
@@ -376,3 +416,12 @@ FROM
   produtos pr
 WHERE
   pr.id = 5;
+
+
+CREATE VIEW categorized_products AS
+SELECT
+  pro.*,
+  cat.categoria
+FROM
+  fseletro1.produtos pro
+  JOIN fseletro1.categoria cat ON pro.id_categoria = cat.id;
