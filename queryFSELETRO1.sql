@@ -15,6 +15,22 @@ USE fseletro1;
 -- CREATE USER 'mitch' @'localhost' IDENTIFIED BY 'pass1234';
 -- GRANT ALL PRIVILEGES ON *.* TO 'mitch' @'localhost';
 -- FLUSH PRIVILEGES;
+delimiter $$
+CREATE FUNCTION preco_final (valor double) RETURNS decimal(8,2)
+READS SQL DATA
+BEGIN
+  set valor = valor * 0.5;
+  RETURN valor ;
+  -- RETURN valor * 0.5;
+END $$ 
+delimiter ;
+
+
+
+SET @valor = 5;
+select preco_final(@valor);
+
+
 CREATE TABLE `categoria` (
   `id` int NOT NULL PRIMARY KEY,
   `categoria` varchar(100) NOT NULL
@@ -421,6 +437,7 @@ WHERE
 CREATE VIEW categorized_products AS
 SELECT
   pro.*,
+  preco_final(pro.preco) preco_venda2,
   cat.categoria
 FROM
   fseletro1.produtos pro

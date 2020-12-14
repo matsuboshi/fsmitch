@@ -83,7 +83,7 @@ if (!$conn) {
                 <div class="card-body text-center">
                   <p class="card-text font-weight-bold " style="font-size: 0.8rem;"><?php echo $rows["descricao"]; ?></p>
                   <h6 class="card-title" style="text-decoration: line-through;">R$ <?php echo $rows["preco"]; ?></h6>
-                  <h5 class="card-title text-danger font-weight-bold">R$ <?php echo $rows["preco_venda"]; ?></h5>
+                  <h5 class="card-title text-danger font-weight-bold">R$ <?php echo $rows["preco_venda2"]; ?></h5>
                 </div>
               </div>
             </div>
